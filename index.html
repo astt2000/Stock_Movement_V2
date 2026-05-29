@@ -18,11 +18,11 @@
 
   .card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px;box-shadow:0 4px 6px rgba(0,0,0,0.1);overflow-x:auto}
   
-  table{width:100%;border-collapse:collapse;text-align:left;table-layout:fixed;min-width:800px}
-  th,td{padding:6px 8px;border-bottom:1px solid #21262d;height:34px;vertical-align:middle;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-  th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:11px;user-select:none;background:#11151c;position:relative}
+  table{width:100%;border-collapse:collapse;text-align:left;table-layout:fixed;min-width:850px}
+  th,td{padding:6px 8px;border-bottom:1px solid #21262d;height:36px;vertical-align:middle;white-space:nowrap}
+  th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:11px;user-select:none;background:#11151c}
   
-  .header-content {display:flex;align-items:center;justify-content:between;width:100%;height:100%}
+  .header-container {display:flex;align-items:center;justify-content:space-between;width:100%}
   .sort-trigger{cursor:pointer;flex-grow:1;display:inline-block;overflow:hidden;text-overflow:ellipsis}
   .sort-trigger:hover{color:#58a6ff}
   th.sort-asc .sort-trigger::after{content:" ▴";color:#58a6ff}
@@ -59,16 +59,17 @@
   .conf-bar-bg {background:#161b22;height:6px;flex-grow:1;border-radius:3px;overflow:hidden;border:1px solid #30363d}
   .conf-bar-fill {height:100%;border-radius:2px;transition:width 0.3s ease}
   
-  /* Fixed, Absolute-Positioned Tooltip Framework */
-  .help-wrapper {display:inline-flex;align-items:center;margin-left:4px}
-  .help-icon {background:#21262d;color:#8b949e;cursor:pointer;font-weight:bold;padding:0 5px;font-size:11px;border-radius:3px;border:1px solid #30363d;user-select:none}
-  .help-icon:hover {color:#58a6ff;border-color:#58a6ff}
+  /* High-Performance ? Click Trigger Design Elements */
+  .help-icon-btn {background:#21262d;color:#8b949e;cursor:pointer;font-weight:bold;padding:1px 6px;font-size:11px;border-radius:4px;border:1px solid #30363d;user-select:none;display:inline-block;line-height:12px;margin-left:4px}
+  .help-icon-btn:hover {color:#58a6ff;border-color:#58a6ff}
   
-  .tooltip-box {display:none;width:250px;background-color:#1c2128;color:#c9d1d9;text-align:left;border:1px solid #444c56;border-radius:6px;padding:10px;position:absolute;z-index:9999;top:110%;right:0;box-shadow:0 8px 24px rgba(0,0,0,0.8);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.45;white-space:normal}
-  .tooltip-box.visible {display:block}
+  /* Global Float Layer Tooltip Architecture (Bypasses parent clipping fields entirely) */
+  .global-tooltip-overlay {display:none;position:absolute;width:260px;background-color:#1c2128;color:#c9d1d9;text-align:left;border:1px solid #444c56;border-radius:6px;padding:12px;z-index:99999;box-shadow:0 12px 28px rgba(0,0,0,0.75);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.5;white-space:normal}
+  .global-tooltip-overlay::after {content:"";position:absolute;bottom:100%;left:20px;border-width:6px;border-style:solid;border-color:transparent transparent #1c2128 transparent}
+  .global-tooltip-overlay::before {content:"";position:absolute;bottom:100%;left:19px;border-width:7px;border-style:solid;border-color:transparent transparent #444c56 transparent;z-index:-1}
 </style>
 </head>
-<body onclick="closeAllTooltips(event)">
+<body onclick="hideActiveGlobalTooltip()">
 
 <header>
   <div>
@@ -89,110 +90,90 @@
     <thead>
       <tr id="headerRow">
         <th style="width: 22%;">
-          <div class="header-content">
+          <div class="header-container">
             <span class="sort-trigger" onclick="sortTable(0)">Ticker & Name</span>
-            <div class="help-wrapper">
-              <span class="help-icon" onclick="toggleTooltip(event, 'tt0')">?</span>
-              <div id="tt0" class="tooltip-box">
-                <strong>Ticker & Asset Name:</strong><br>The official market symbol mapped directly to its corporate name profile.
-              </div>
-            </div>
+            <span class="help-icon-btn" onclick="showGlobalTooltip(event, this, 'Ticker & Asset Name', 'The official asset market exchange identifier symbol mapped directly to its complete corporate profile legal name index.')">?</span>
           </div>
         </th>
         <th style="width: 11%;"><span class="sort-trigger" onclick="sortTable(1)">Live Price</span></th>
         <th style="width: 9%;"><span class="sort-trigger" onclick="sortTable(2)">Change</span></th>
         <th style="width: 12%;">
-          <div class="header-content">
+          <div class="header-container">
             <span class="sort-trigger" onclick="sortTable(3)">Moving Trend</span>
-            <div class="help-wrapper">
-              <span class="help-icon" onclick="toggleTooltip(event, 'tt1')">?</span>
-              <div id="tt1" class="tooltip-box">
-                <strong>Moving Trend:</strong><br>Indicates rolling price vector directions evaluated across recent multi-day historical cycles.
-              </div>
-            </div>
+            <span class="help-icon-btn" onclick="showGlobalTooltip(event, this, 'Moving Trend Indicator', 'Tracks short-term rolling directional momentum vectors derived dynamically from closing price positions across the trailing 3-day history frame.')">?</span>
           </div>
         </th>
-        <th style="width: 10%;">
-          <div class="header-content">
+        <th style="width: 11%;">
+          <div class="header-container">
             <span class="sort-trigger" onclick="sortTable(4)">RSI (14)</span>
-            <div class="help-wrapper">
-              <span class="help-icon" onclick="toggleTooltip(event, 'tt2')">?</span>
-              <div id="tt2" class="tooltip-box">
-                <strong>RSI (Relative Strength Index):</strong><br>
-                • <strong>&gt;70 (Overbought):</strong> Overextended momentum layer. Correction risk.<br>
-                • <strong>&lt;30 (Oversold):</strong> Depleted asset base. Turning bounce potential.
-              </div>
-            </div>
+            <span class="help-icon-btn" onclick="showGlobalTooltip(event, this, 'RSI (14) Momentum Oscillator', 'Evaluates relative price velocity layers.<br>• <b>&gt;70 (Overbought):</b> Extreme buying risk. Potential downward correction spot.<br>• <b>&lt;30 (Oversold):</b> Depleted selling base. Turning bounce potential target.')">?</span>
           </div>
         </th>
         <th style="width: 14%;">
-          <div class="header-content">
+          <div class="header-container">
             <span class="sort-trigger" onclick="sortTable(5)">Calculated Track</span>
-            <div class="help-wrapper">
-              <span class="help-icon" onclick="toggleTooltip(event, 'tt3')">?</span>
-              <div id="tt3" class="tooltip-box">
-                <strong>Calculated Track:</strong><br>Active trend phases tracked using MACD convergence line mathematical crossovers.
-              </div>
-            </div>
+            <span class="help-icon-btn" onclick="showGlobalTooltip(event, this, 'Calculated Track (MACD)', 'Identifies long-term underlying trend phases through mathematical crossovers of the Fast (12) and Slow (26) Exponential Moving Averages.')">?</span>
           </div>
         </th>
         <th style="width: 11%;">
-          <div class="header-content">
+          <div class="header-container">
             <span class="sort-trigger" onclick="sortTable(6)">Action Signal</span>
-            <div class="help-wrapper">
-              <span class="help-icon" onclick="toggleTooltip(event, 'tt4')">?</span>
-              <div id="tt4" class="tooltip-box">
-                <strong>Action Signal:</strong><br>Algorithmic strategy decisions triggered when RSI boundaries intersect MACD validation shifts.
-              </div>
-            </div>
+            <span class="help-icon-btn" onclick="showGlobalTooltip(event, this, 'Execution Action Signal', 'Algorithmic core strategy decision matrix output. Triggers automated actionable execution rules when structural RSI bounds align with confirmed MACD crossover vectors.')">?</span>
           </div>
         </th>
-        <th style="width: 11%;">
-          <div class="header-content">
+        <th style="width: 10%;">
+          <div class="header-container">
             <span class="sort-trigger" onclick="sortTable(7)">Confidence</span>
-            <div class="help-wrapper">
-              <span class="help-icon" onclick="toggleTooltip(event, 'tt5')">?</span>
-              <div id="tt5" class="tooltip-box">
-                <strong>Confidence Score:</strong><br>Mathematical probability value indicating structural calculation support for the Action Signal.
-              </div>
-            </div>
+            <span class="help-icon-btn" onclick="showGlobalTooltip(event, this, 'Algorithmic Confidence Score', 'Mathematical probability weight scale expressing total operational validation strength backing the current execution Action Signal.')">?</span>
           </div>
         </th>
       </tr>
     </thead>
     <tbody id="terminalBody">
-      <tr><td colspan="8" style="text-align:center;color:#8b949e;padding:15px;">Assembling market matrix arrays...</td></tr>
+      <tr><td colspan="8" style="text-align:center;color:#8b949e;padding:15px;">Assembling live market dashboard matrix vectors...</td></tr>
     </tbody>
   </table>
 </div>
 
+<div id="globalTooltip" class="global-tooltip-overlay"></div>
+
 <script>
-const FINNHUB_KEY = "d2530epr01qns40ctr90d2530epr01qns40ctr9g";
+const FINNHUB_KEY = "__FINNHUB_KEY_PLACEHOLDER__";
 let trackedSymbols = [];
 let registryData = [];
 let currentSortCol = -1;
 let sortAscending = true;
 
-// Direct Touch-Input JavaScript Tooltip Layer Engine
-function toggleTooltip(event, id) {
+// High-Performance Global Positioning Tooltip Function
+function showGlobalTooltip(event, targetElement, title, description) {
   event.preventDefault();
-  event.stopPropagation(); // Restricts the parent column click from triggering a table sort update
+  event.stopPropagation(); // Blocks parent column cells from firing sorting changes
   
-  const box = document.getElementById(id);
-  const isVisible = box.classList.contains('visible');
+  const tooltipBox = document.getElementById('globalTooltip');
   
-  // Clean sweep other visible instances to avoid overlay confusion
-  document.querySelectorAll('.tooltip-box').forEach(b => b.classList.remove('visible'));
+  tooltipBox.innerHTML = `<strong>${title}</strong><br style="margin-bottom:4px;">${description}`;
+  tooltipBox.style.display = 'block';
   
-  if (!isVisible) {
-    box.classList.add('visible');
+  // Calculate bounding boxes relative to viewable browser viewport area
+  const targetRect = targetElement.getBoundingClientRect();
+  const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  
+  // Align precisely underneath the clicked '?' button
+  let finalLeftPosition = targetRect.left + scrollLeft - 20;
+  let finalTopPosition = targetRect.bottom + scrollTop + 8;
+  
+  // Prevent overlay clipping past right screen margins on smaller tablet viewports
+  if (finalLeftPosition + 260 > window.innerWidth) {
+    finalLeftPosition = window.innerWidth - 275;
   }
+  
+  tooltipBox.style.left = finalLeftPosition + 'px';
+  tooltipBox.style.top = finalTopPosition + 'px';
 }
 
-function closeAllTooltips(event) {
-  document.querySelectorAll('.tooltip-box').forEach(box => {
-    box.classList.remove('visible');
-  });
+function hideActiveGlobalTooltip() {
+  document.getElementById('globalTooltip').style.display = 'none';
 }
 
 async function initializeTerminal() {
