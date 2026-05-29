@@ -4,7 +4,6 @@ import sys
 from datetime import datetime
 import yfinance as yf
 import pandas as pd
-import requests
 
 def load_tickers_from_file(filename, default_list):
     if not os.path.exists(filename):
@@ -55,7 +54,6 @@ def calculate_technical_indicators(df):
         signal = "SELL"
         confidence = 70.0 + (current_rsi - 60) * 1.5
     else:
-        # Neutral markets or mixed indicators
         signal = "HOLD"
         confidence = 50.0 + abs(macd_val - sig_val) * 10
         if confidence > 69.0: confidence = 65.0
@@ -74,7 +72,6 @@ def main():
         print(f" Processing Core Diagnostics: {symbol}")
         try:
             ticker_obj = yf.Ticker(symbol)
-            # Fetch longName safely or fallback to symbol name
             info = ticker_obj.info
             full_name = info.get('longName', f"{symbol} Inc.")
             
@@ -86,7 +83,6 @@ def main():
             prev_close = float(df['Close'].iloc[-2])
             pct_change = ((current_price - prev_close) / prev_close) * 100
             
-            # Simple 3-day history window to establish short trend direction
             h3 = df['Close'].tail(3).tolist()
             trend = "UP" if h3[-1] >= h3[0] else "DOWN"
             

@@ -6,36 +6,35 @@
 <title>Institutional Trading Intelligence Terminal</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;background:#0d1117;color:#c9d1d9;padding:12px;font-size:12px}
+  body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,sans-serif;background:#0d1117;color:#c9d1d9;padding:8px;font-size:13px}
   
-  header{background:#161b22;padding:10px 14px;border-radius:6px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;border:1px solid #30363d;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
-  h1{font-size:14px;color:#58a6ff;font-weight:700;display:flex;align-items:center;gap:8px}
-  .meta{font-size:11px;color:#8b949e;display:flex;gap:16px;align-items:center}
+  header{background:#161b22;padding:8px 12px;border-radius:6px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;border:1px solid #30363d;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+  h1{font-size:15px;color:#58a6ff;font-weight:700;display:flex;align-items:center;gap:6px}
+  .meta{font-size:12px;color:#8b949e;display:flex;gap:12px;align-items:center}
   
-  .market-clock-banner{background:#1f2937;padding:4px 10px;border-radius:4px;border:1px solid #4b5563;font-family:monospace;font-weight:bold}
+  .market-clock-banner{background:#1f2937;padding:3px 8px;border-radius:4px;border:1px solid #4b5563;font-family:monospace;font-weight:bold;font-size:12px}
   .mkt-open{color:#3fb950}
   .mkt-closed{color:#f85149}
 
-  .card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1)}
-  h2{font-size:12px;margin-bottom:8px;color:#f0883e;text-transform:uppercase;letter-spacing:0.5px;display:flex;justify-content:between}
+  .card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:8px;box-shadow:0 4px 6px rgba(0,0,0,0.1)}
   
   table{width:100%;border-collapse:collapse;text-align:left}
-  th,td{padding:5px 8px;border-bottom:1px solid #21262d;height:28px}
-  th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:10px;cursor:pointer;user-select:none;background:#11151c;white-space:nowrap}
-  th:hover{color:#58a6ff;background:#161b22}
-  th.sort-asc::after{content:" ▴";color:#58a6ff}
-  th.sort-desc::after{content:" ▾";color:#58a6ff}
+  th,td{padding:4px 6px;border-bottom:1px solid #21262d;height:26px;vertical-align:middle}
+  th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:11px;user-select:none;background:#11151c;white-space:nowrap}
+  th .sort-trigger{cursor:pointer;display:inline-block}
+  th .sort-trigger:hover{color:#58a6ff}
+  th.sort-asc .sort-trigger::after{content:" ▴";color:#58a6ff}
+  th.sort-desc .sort-trigger::after{content:" ▾";color:#58a6ff}
   
   tr:hover{background-color:#1c2128}
-  .stock-sym{font-size:13px;color:#f0f6fc}
-  .stock-name{font-size:10px;color:#8b949e;display:block;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .stock-sym{font-size:14px;color:#f0f6fc;font-weight:bold}
+  .stock-name{font-size:11px;color:#8b949e;display:block;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   
   .up{color:#3fb950;font-weight:600}
   .down{color:#f85149;font-weight:600}
-  .trend-icon{display:inline-block;margin-right:2px;font-weight:bold}
+  .trend-icon{display:inline-block;margin-right:2px;font-weight:bold;font-size:11px}
   
-  .badge{padding:2px 5px;border-radius:4px;font-size:10px;font-weight:700;font-family:monospace}
-  .badge-rsi{background:#1f6feb;color:#fff;cursor:help;position:relative}
+  .badge{padding:1px 4px;border-radius:4px;font-size:11px;font-weight:700;font-family:monospace;display:inline-block}
   
   /* Calculated Track Custom Conditional Color Engine */
   .track-bullish{background:rgba(63,185,80,0.15);color:#56d364;border:1px solid rgba(63,185,80,0.3)}
@@ -47,10 +46,20 @@
   .sig-sell{background:#da3633;color:#fff}
   .sig-hold{background:#30363d;color:#8b949e}
   
-  /* High-Performance Tooltip Engine */
+  /* Confidence Visual Enhancement Bar */
+  .conf-container {display:flex;align-items:center;gap:6px;width:100px}
+  .conf-text {font-family:monospace;font-weight:bold;color:#f0f6fc;min-width:38px}
+  .conf-bar-bg {background:#21262d;height:5px;width:100%;border-radius:3px;overflow:hidden;border:1px solid #30363d}
+  .conf-bar-fill {height:100%;border-radius:2px;transition:width 0.3s ease}
+  
+  /* CSS Tooltip Architecture Blueprint */
+  .help-icon {color:#8b949e;cursor:help;font-weight:bold;margin-left:2px;font-size:11px}
+  .help-icon:hover {color:#58a6ff}
+  
   .tooltip{position:relative;display:inline-block}
-  .tooltip .tooltiptext{visibility:hidden;width:240px;background-color:#21262d;color:#c9d1d9;text-align:left;border:1px solid #30363d;border-radius:6px;padding:8px;position:absolute;z-index:10;bottom:125%;left:50%;transform:translateX(-50%);box-shadow:0 8px 24px rgba(0,0,0,0.5);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.3;white-space:normal;opacity:0;transition:opacity 0.2s}
+  .tooltip .tooltiptext{visibility:hidden;width:260px;background-color:#1f242c;color:#c9d1d9;text-align:left;border:1px solid #30363d;border-radius:6px;padding:8px;position:absolute;z-index:100;bottom:125%;left:50%;transform:translateX(-50%);box-shadow:0 8px 24px rgba(0,0,0,0.6);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.35;white-space:normal;opacity:0;transition:opacity 0.15s;pointer-events:none}
   .tooltip:hover .tooltiptext{visibility:visible;opacity:1}
+  th.tooltip .tooltiptext {bottom:auto;top:125%;transform:translateX(-30%)}
 </style>
 </head>
 <body>
@@ -73,23 +82,62 @@
   <table>
     <thead>
       <tr id="headerRow">
-        <th onclick="sortTable(0)">Ticker & Asset Name</th>
-        <th onclick="sortTable(1)">Live Price</th>
-        <th onclick="sortTable(2)">Change</th>
-        <th onclick="sortTable(3)">RSI (14)</th>
-        <th onclick="sortTable(4)">Calculated Track</th>
-        <th onclick="sortTable(5)">Action Signal</th>
-        <th onclick="sortTable(6)">Confidence</th>
+        <th class="tooltip" style="width:25%;">
+          <span class="sort-trigger" onclick="sortTable(0)">Ticker & Asset Name</span>
+          <span class="help-icon">?</span>
+          <span class="tooltiptext">
+            <strong>Ticker & Asset Name:</strong><br>
+            The official exchange market equity identifier symbol mapped directly to its full legally registered corporate profile name.
+          </span>
+        </th>
+        <th style="width:12%;"><span class="sort-trigger" onclick="sortTable(1)">Live Price</span></th>
+        <th style="width:10%;"><span class="sort-trigger" onclick="sortTable(2)">Change</span></th>
+        <th class="tooltip" style="width:12%;">
+          <span class="sort-trigger" onclick="sortTable(3)">RSI (14)</span>
+          <span class="help-icon">?</span>
+          <span class="tooltiptext">
+            <strong>RSI (Relative Strength Index):</strong><br>
+            Momentum oscillator checking the speed and size of recent price shifts.<br>
+            • <strong>&gt;70 (Overbought):</strong> Stock might be overextended due for a downward correction.<br>
+            • <strong>&lt;30 (Oversold):</strong> Stock might be undervalued ripe for a turning rally bounce.
+          </span>
+        </th>
+        <th class="tooltip" style="width:16%;">
+          <span class="sort-trigger" onclick="sortTable(4)">Calculated Track</span>
+          <span class="help-icon">?</span>
+          <span class="tooltiptext">
+            <strong>Calculated Track:</strong><br>
+            Displays active trend phases using MACD momentum computations.<br>
+            • <strong>Bullish Crossover:</strong> Fast momentum has crossed upward over historical trendlines.<br>
+            • <strong>Bearish Phase:</strong> Short-term momentum is sliding under historical resistance metrics.
+          </span>
+        </th>
+        <th class="tooltip" style="width:12%;">
+          <span class="sort-trigger" onclick="sortTable(5)">Action Signal</span>
+          <span class="help-icon">?</span>
+          <span class="tooltiptext">
+            <strong>Action Signal:</strong><br>
+            Algorithmic execution decision derived from intersecting structural RSI parameters with MACD crossover directions.
+          </span>
+        </th>
+        <th class="tooltip" style="width:13%;">
+          <span class="sort-trigger" onclick="sortTable(6)">Confidence</span>
+          <span class="help-icon">?</span>
+          <span class="tooltiptext">
+            <strong>Confidence Score:</strong><br>
+            Mathematical strength representation of the Action Signal. Evaluates how deep indicators have penetrated deep threshold extreme target bands.
+          </span>
+        </th>
       </tr>
     </thead>
     <tbody id="terminalBody">
-      <tr><td colspan="7" style="text-align:center;color:#8b949e;padding:20px;">Assembling high-density data matrix...</td></tr>
+      <tr><td colspan="7" style="text-align:center;color:#8b949e;padding:12px;">Assembling high-density data matrix...</td></tr>
     </tbody>
   </table>
 </div>
 
 <script>
-const FINNHUB_KEY = "d2530epr01qns40ctr90d2530epr01qns40ctr9g";
+const FINNHUB_KEY = "__FINNHUB_KEY_PLACEHOLDER__";
 let trackedSymbols = [];
 let registryData = [];
 let currentSortCol = -1;
@@ -103,7 +151,6 @@ async function initializeTerminal() {
     document.getElementById('syncTimestamp').innerText = payload.sync_timestamp || "No Track";
     trackedSymbols = [...new Set([...payload.list1_symbols, ...payload.list2_symbols])];
     
-    // Transform registry dictionary into flat sortable array
     registryData = Object.values(payload.registry || {});
     
     renderTable();
@@ -124,15 +171,18 @@ function renderTable() {
     const trendIcon = asset.trend === "UP" ? "▲" : "▼";
     const sign = asset.change >= 0 ? "+" : "";
     
-    // Calculated Track Badge Style Assigning Engine
     let trackStyleClass = "track-neutral";
     if (asset.macdStr === "Bullish Crossover") trackStyleClass = "track-bullish";
     if (asset.macdStr === "Bearish Phase") trackStyleClass = "track-bearish";
     
-    // Action Signal Styling Block
     let sigClass = "sig-hold";
     if (asset.signal === "BUY") sigClass = "sig-buy";
     if (asset.signal === "SELL") sigClass = "sig-sell";
+    
+    // Dynamic color logic engine for the visual confidence bar matrix Fill
+    let barColor = "#8b949e"; // default gray
+    if (asset.signal === "BUY") barColor = "#2ea44f"; // green
+    if (asset.signal === "SELL") barColor = "#f85149"; // red
     
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -140,30 +190,28 @@ function renderTable() {
         <span class="stock-sym">${asset.sym}</span>
         <span class="stock-name" title="${asset.name}">${asset.name}</span>
       </td>
-      <td id="price-${asset.sym}" style="font-family:monospace;font-size:12px;">
+      <td id="price-${asset.sym}" style="font-family:monospace;font-size:13px;">
         <span class="trend-icon ${changeClass}">${trendIcon}</span>$${parseFloat(asset.price).toFixed(2)}
       </td>
       <td id="change-${asset.sym}" class="${changeClass}">${sign}${parseFloat(asset.change).toFixed(2)}%</td>
       <td>
-        <div class="tooltip">
-          <span class="badge badge-rsi">${parseFloat(asset.rsi).toFixed(1)}</span>
-          <span class="tooltiptext">
-            <strong>RSI (Relative Strength Index):</strong><br>
-            Current value: ${parseFloat(asset.rsi).toFixed(1)}.<br>
-            • &gt;70 indicates <strong>Overbought condition</strong> (potential exhaustion/reversal down).<br>
-            • &lt;30 indicates <strong>Oversold condition</strong> (potential short squeeze/reversal up).
-          </span>
-        </div>
+        <span class="badge" style="background:#21262d;color:#58a6ff;border:1px solid #30363d;">${parseFloat(asset.rsi).toFixed(1)}</span>
       </td>
       <td><span class="badge ${trackStyleClass}">${asset.macdStr}</span></td>
       <td><span class="badge ${sigClass}">${asset.signal}</span></td>
-      <td style="font-family:monospace;font-weight:bold;color:#f0f6fc;">${parseFloat(asset.confidence).toFixed(1)}%</td>
+      <td>
+        <div class="conf-container">
+          <span class="conf-text">${parseFloat(asset.confidence).toFixed(0)}%</span>
+          <div class="conf-bar-bg">
+            <div class="conf-bar-fill" style="width: ${asset.confidence}%; background: ${barColor};"></div>
+          </div>
+        </div>
+      </td>
     `;
     tbody.appendChild(row);
   });
 }
 
-// Low-Latency Global Matrix Sorter Logic
 function sortTable(columnIndex) {
   const headers = document.querySelectorAll('th');
   
@@ -171,11 +219,11 @@ function sortTable(columnIndex) {
     sortAscending = !sortAscending;
   } else {
     sortAscending = true;
-    if (currentSortCol !== -1) headers[currentSortCol].className = '';
+    if (currentSortCol !== -1) headers[currentSortCol].className = headers[currentSortCol].className.replace('sort-asc','').replace('sort-desc','').trim();
     currentSortCol = columnIndex;
   }
   
-  headers[columnIndex].className = sortAscending ? 'sort-asc' : 'sort-desc';
+  headers[columnIndex].className = headers[columnIndex].className.replace('sort-asc','').replace('sort-desc','').trim() + (sortAscending ? ' sort-asc' : ' sort-desc');
 
   registryData.sort((a, b) => {
     let valA, valB;
@@ -200,7 +248,6 @@ function sortTable(columnIndex) {
   renderTable();
 }
 
-// 1. WebSocket Live Price Streaming Link Engine (Finnhub Core)
 function initFinnhubWebSocket() {
   if (FINNHUB_KEY.startsWith("__")) return;
 
@@ -225,7 +272,6 @@ function initFinnhubWebSocket() {
         asset.price = price;
         const targetRowPrice = document.getElementById(`price-${symbol}`);
         if (targetRowPrice) {
-          // Dynamic calculation updates for session deviation
           const baselineClose = asset.price / (1 + (asset.change / 100));
           asset.change = ((price - baselineClose) / baselineClose) * 100;
           
@@ -250,12 +296,10 @@ function initFinnhubWebSocket() {
   });
 }
 
-// 2. High-Precision US Market Countdown Engine
 function updateMarketCountdown() {
   const clockEl = document.getElementById('marketClock');
   const now = new Date();
   
-  // Convert current system execution context directly to US Eastern Time (EST/EDT)
   const estStr = now.toLocaleString("en-US", {timeZone: "America/New_York"});
   const estTime = new Date(estStr);
   
@@ -265,8 +309,8 @@ function updateMarketCountdown() {
   
   const isWeekend = (day === 0 || day === 6);
   const currentMinutes = hours * 60 + minutes;
-  const openMinutes = 9 * 60 + 30; // 09:30 AM EST
-  const closeMinutes = 16 * 60;   // 04:00 PM EST
+  const openMinutes = 9 * 60 + 30;
+  const closeMinutes = 16 * 60;
   
   const isMarketOpen = !isWeekend && (currentMinutes >= openMinutes && currentMinutes < closeMinutes);
   
@@ -277,7 +321,6 @@ function updateMarketCountdown() {
     const remSecs = 59 - estTime.getSeconds();
     clockEl.innerHTML = `<span class="mkt-open">● NYSE/NASDAQ OPEN</span> (Closes in: ${String(remHours).padStart(2,'0')}:${String(remMins).padStart(2,'0')}:${String(remSecs).padStart(2,'0')})`;
   } else {
-    // Calculate distance to next opening bell session window target
     let targetOpen = new Date(estTime);
     targetOpen.setHours(9, 30, 0, 0);
     
