@@ -22,8 +22,8 @@
   th,td{padding:4px 6px;border-bottom:1px solid #21262d;height:32px;vertical-align:middle;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:11px;user-select:none;background:#11151c}
   
-  th .sort-trigger{cursor:pointer;display:inline-block}
-  th .sort-trigger:hover{color:#58a6ff}
+  .sort-trigger{cursor:pointer;display:inline-block;width:100%;height:100%}
+  .sort-trigger:hover{color:#58a6ff}
   th.sort-asc .sort-trigger::after{content:" ▴";color:#58a6ff}
   th.sort-desc .sort-trigger::after{content:" ▾";color:#58a6ff}
   
@@ -37,33 +37,41 @@
   
   .badge{padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700;font-family:monospace;display:inline-block}
   
-  /* Calculated Track Formatting Profiles */
-  .track-bullish{background:rgba(63,185,80,0.15);color:#56d364;border:1px solid rgba(63,185,80,0.3)}
-  .track-bearish{background:rgba(248,81,73,0.15);color:#ff7b72;border:1px solid rgba(248,81,73,0.3)}
-  .track-neutral{background:rgba(139,148,158,0.15);color:#c9d1d9;border:1px solid rgba(139,148,158,0.3)}
+  /* Trend indicator layouts */
+  .trend-pill {padding:2px 6px;border-radius:12px;font-size:10px;font-weight:bold;display:inline-flex;align-items:center;gap:3px}
+  .trend-pill-up {background:rgba(63,185,80,0.15);color:#56d364;border:1px solid rgba(63,185,80,0.25)}
+  .trend-pill-down {background:rgba(248,81,73,0.15);color:#ff7b72;border:1px solid rgba(248,81,73,0.25)}
 
-  /* Trade Signal Layout Styles */
-  .sig-buy{background:#238636;color:#fff}
-  .sig-sell{background:#da3633;color:#fff}
-  .sig-hold{background:#30363d;color:#8b949e}
+  /* Calculated Track Formatting Profiles */
+  .track-bullish{background:rgba(63,185,80,0.12);color:#56d364;border:1px solid rgba(63,185,80,0.25)}
+  .track-bearish{background:rgba(248,81,73,0.12);color:#ff7b72;border:1px solid rgba(248,81,73,0.25)}
+  .track-neutral{background:rgba(139,148,158,0.12);color:#c9d1d9;border:1px solid rgba(139,148,158,0.25)}
+
+  /* Color-Enhanced Action Signals */
+  .sig-buy{background:linear-gradient(135deg, #1e7e34, #28a745);color:#ffffff;box-shadow:0 0 6px rgba(40,167,69,0.4);border:1px solid #34ce57}
+  .sig-sell{background:linear-gradient(135deg, #bd2130, #dc3545);color:#ffffff;box-shadow:0 0 6px rgba(220,53,69,0.4);border:1px solid #e4606d}
+  .sig-hold{background:#21262d;color:#8b949e;border:1px solid #30363d}
   
-  /* Modern High-Density Progress Metric Bars */
+  /* Color-Enhanced Confidence Visual Progress Indicators */
   .conf-container {display:flex;align-items:center;gap:6px;width:100%}
-  .conf-text {font-family:monospace;font-weight:bold;color:#f0f6fc;min-width:34px}
-  .conf-bar-bg {background:#21262d;height:6px;flex-grow:1;border-radius:3px;overflow:hidden;border:1px solid #30363d}
+  .conf-text {font-family:monospace;font-weight:bold;min-width:34px;text-shadow:0 0 4px rgba(0,0,0,0.5)}
+  .conf-bar-bg {background:#161b22;height:6px;flex-grow:1;border-radius:3px;overflow:hidden;border:1px solid #30363d}
   .conf-bar-fill {height:100%;border-radius:2px;transition:width 0.3s ease}
   
-  /* Native Precision CSS CSS Tooltip Engine */
-  .help-icon {color:#8b949e;cursor:help;font-weight:bold;margin-left:2px;font-size:11px}
-  .help-icon:hover {color:#58a6ff}
+  /* Touch-Responsive Modal/Tooltip Frame Blueprint */
+  .help-wrapper {display:inline-block;position:relative}
+  .help-icon {background:#21262d;color:#8b949e;cursor:pointer;font-weight:bold;padding:0 5px;margin-left:3px;font-size:10px;border-radius:3px;border:1px solid #30363d;user-select:none;display:inline-block}
+  .help-icon:hover {color:#58a6ff;border-color:#58a6ff}
   
-  .tooltip{position:relative}
-  .tooltip .tooltiptext{visibility:hidden;width:240px;background-color:#1f242c;color:#c9d1d9;text-align:left;border:1px solid #30363d;border-radius:6px;padding:8px;position:absolute;z-index:100;bottom:125%;left:50%;transform:translateX(-50%);box-shadow:0 8px 24px rgba(0,0,0,0.6);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.4;white-space:normal;opacity:0;transition:opacity 0.1s ease;pointer-events:none}
-  .tooltip:hover .tooltiptext{visibility:visible;opacity:1}
-  th.tooltip .tooltiptext {bottom:auto;top:125%;transform:translateX(-20%)}
+  .tooltip-box {display:none;width:240px;background-color:#1c2128;color:#c9d1d9;text-align:left;border:1px solid #444c56;border-radius:6px;padding:10px;position:absolute;z-index:999;bottom:130%;left:50%;transform:translateX(-50%);box-shadow:0 8px 24px rgba(0,0,0,0.7);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.45;white-space:normal}
+  .tooltip-box::after {content:"";position:absolute;top:100%;left:50%;margin-left:-5px;border-width:5px;border-style:solid;border-color:#444c56 transparent transparent transparent}
+  th .tooltip-box {bottom:auto;top:140%;left:0;transform:none}
+  th .tooltip-box::after {top:-10px;left:15%;border-color:transparent transparent #444c56 transparent}
+  
+  .tooltip-box.visible {display:block}
 </style>
 </head>
-<body>
+<body onclick="closeAllTooltips(event)">
 
 <header>
   <div>
@@ -83,66 +91,95 @@
   <table>
     <thead>
       <tr id="headerRow">
-        <th class="tooltip" style="width: 24%;">
-          <span class="sort-trigger" onclick="sortTable(0)">Ticker & Asset Name</span>
-          <span class="help-icon">?</span>
-          <span class="tooltiptext">
-            <strong>Ticker & Asset Name:</strong><br>
-            The official exchange market equity identifier symbol mapped directly to its full legally registered corporate profile name.
-          </span>
+        <th style="width: 22%;">
+          <span class="sort-trigger" onclick="sortTable(0)">Ticker & Name</span>
+          <div class="help-wrapper">
+            <span class="help-icon" onclick="toggleTooltip(event, 'tt0')">?</span>
+            <div id="tt0" class="tooltip-box">
+              <strong>Ticker & Asset Name:</strong><br>The trading symbol mapped directly to its corporate profile name.
+            </div>
+          </div>
         </th>
         <th style="width: 11%;"><span class="sort-trigger" onclick="sortTable(1)">Live Price</span></th>
-        <th style="width: 10%;"><span class="sort-trigger" onclick="sortTable(2)">Change</span></th>
-        <th class="tooltip" style="width: 11%;">
-          <span class="sort-trigger" onclick="sortTable(3)">RSI (14)</span>
-          <span class="help-icon">?</span>
-          <span class="tooltiptext">
-            <strong>RSI (Relative Strength Index):</strong><br>
-            Momentum oscillator checking the speed and size of recent price shifts.<br>
-            • <strong>&gt;70 (Overbought):</strong> Overextended. Potential downward correction.<br>
-            • <strong>&lt;30 (Oversold):</strong> Undervalued. Potential upward rally bounce.
-          </span>
+        <th style="width: 9%;"><span class="sort-trigger" onclick="sortTable(2)">Change</span></th>
+        <th style="width: 10%;">
+          <span class="sort-trigger" onclick="sortTable(3)">Moving Trend</span>
+          <div class="help-wrapper">
+            <span class="help-icon" onclick="toggleTooltip(event, 'tt1')">?</span>
+            <div id="tt1" class="tooltip-box">
+              <strong>Moving Trend:</strong><br>Indicates the rolling multi-day historical price vector direction.
+            </div>
+          </div>
         </th>
-        <th class="tooltip" style="width: 17%;">
-          <span class="sort-trigger" onclick="sortTable(4)">Calculated Track</span>
-          <span class="help-icon">?</span>
-          <span class="tooltiptext">
-            <strong>Calculated Track:</strong><br>
-            Displays active trend phases using MACD momentum computations.<br>
-            • <strong>Bullish Crossover:</strong> Fast momentum has crossed upward over historical trendlines.<br>
-            • <strong>Bearish Phase:</strong> Short-term momentum is sliding under historical resistance metrics.
-          </span>
+        <th style="width: 10%;">
+          <span class="sort-trigger" onclick="sortTable(4)">RSI (14)</span>
+          <div class="help-wrapper">
+            <span class="help-icon" onclick="toggleTooltip(event, 'tt2')">?</span>
+            <div id="tt2" class="tooltip-box">
+              <strong>RSI (Relative Strength Index):</strong><br>
+              • <strong>&gt;70 (Overbought):</strong> High risk reversal down.<br>
+              • <strong>&lt;30 (Oversold):</strong> Turning bounce target up.
+            </div>
+          </div>
         </th>
-        <th class="tooltip" style="width: 13%;">
-          <span class="sort-trigger" onclick="sortTable(5)">Action Signal</span>
-          <span class="help-icon">?</span>
-          <span class="tooltiptext">
-            <strong>Action Signal:</strong><br>
-            Algorithmic execution decision derived from intersecting structural RSI parameters with MACD crossover directions.
-          </span>
+        <th style="width: 14%;">
+          <span class="sort-trigger" onclick="sortTable(5)">Calculated Track</span>
+          <div class="help-wrapper">
+            <span class="help-icon" onclick="toggleTooltip(event, 'tt3')">?</span>
+            <div id="tt3" class="tooltip-box">
+              <strong>Calculated Track:</strong><br>MACD indicator momentum state checking line crossovers.
+            </div>
+          </div>
         </th>
-        <th class="tooltip" style="width: 14%;">
-          <span class="sort-trigger" onclick="sortTable(6)">Confidence</span>
-          <span class="help-icon">?</span>
-          <span class="tooltiptext">
-            <strong>Confidence Score:</strong><br>
-            Mathematical strength representation of the Action Signal. Evaluates how deep indicators have penetrated deep threshold extreme target bands.
-          </span>
+        <th style="width: 11%;">
+          <span class="sort-trigger" onclick="sortTable(6)">Action Signal</span>
+          <div class="help-wrapper">
+            <span class="help-icon" onclick="toggleTooltip(event, 'tt4')">?</span>
+            <div id="tt4" class="tooltip-box">
+              <strong>Action Signal:</strong><br>Execution strategy combining RSI zones with MACD trends.
+            </div>
+          </div>
+        </th>
+        <th style="width: 13%;">
+          <span class="sort-trigger" onclick="sortTable(7)">Confidence</span>
+          <div class="help-wrapper">
+            <span class="help-icon" onclick="toggleTooltip(event, 'tt5')">?</span>
+            <div id="tt5" class="tooltip-box">
+              <strong>Confidence Score:</strong><br>Algorithmic conviction level based on indicator depth.
+            </div>
+          </div>
         </th>
       </tr>
     </thead>
     <tbody id="terminalBody">
-      <tr><td colspan="7" style="text-align:center;color:#8b949e;padding:15px;">Assembling high-density data matrix...</td></tr>
+      <tr><td colspan="8" style="text-align:center;color:#8b949e;padding:15px;">Assembling matrix vectors...</td></tr>
     </tbody>
   </table>
 </div>
 
 <script>
-const FINNHUB_KEY = "d2530epr01qns40ctr90d2530epr01qns40ctr9g";
+const FINNHUB_KEY = "__FINNHUB_KEY_PLACEHOLDER__";
 let trackedSymbols = [];
 let registryData = [];
 let currentSortCol = -1;
 let sortAscending = true;
+
+// Touch-Friendly Tooltip Framework
+function toggleTooltip(event, id) {
+  event.stopPropagation(); // Stops parent sorting trigger
+  const box = document.getElementById(id);
+  const isVisible = box.classList.contains('visible');
+  closeAllTooltips();
+  if (!isVisible) {
+    box.classList.add('visible');
+  }
+}
+
+function closeAllTooltips(event) {
+  document.querySelectorAll('.tooltip-box').forEach(box => {
+    box.classList.remove('visible');
+  });
+}
 
 async function initializeTerminal() {
   try {
@@ -169,8 +206,13 @@ function renderTable() {
   
   registryData.forEach(asset => {
     const changeClass = asset.change >= 0 ? "up" : "down";
-    const trendIcon = asset.trend === "UP" ? "▲" : "▼";
+    const trendIcon = asset.change >= 0 ? "▲" : "▼";
     const sign = asset.change >= 0 ? "+" : "";
+    
+    // Build Moving Trend Layout
+    const isUp = asset.trend === "UP";
+    const trendPillClass = isUp ? "trend-pill-up" : "trend-pill-down";
+    const trendText = isUp ? "▲ UP" : "▼ DOWN";
     
     let trackStyleClass = "track-neutral";
     if (asset.macdStr === "Bullish Crossover") trackStyleClass = "track-bullish";
@@ -180,9 +222,10 @@ function renderTable() {
     if (asset.signal === "BUY") sigClass = "sig-buy";
     if (asset.signal === "SELL") sigClass = "sig-sell";
     
+    let textColor = "#c9d1d9";
     let barColor = "#8b949e";
-    if (asset.signal === "BUY") barColor = "#2ea44f";
-    if (asset.signal === "SELL") barColor = "#f85149";
+    if (asset.signal === "BUY") { barColor = "linear-gradient(90deg, #28a745, #34ce57)"; textColor = "#56d364"; }
+    if (asset.signal === "SELL") { barColor = "linear-gradient(90deg, #dc3545, #e4606d)"; textColor = "#ff7b72"; }
     
     const row = document.createElement('tr');
     row.innerHTML = `
@@ -195,13 +238,16 @@ function renderTable() {
       </td>
       <td id="change-${asset.sym}" class="${changeClass}">${sign}${parseFloat(asset.change).toFixed(2)}%</td>
       <td>
+        <span class="trend-pill ${trendPillClass}">${trendText}</span>
+      </td>
+      <td>
         <span class="badge" style="background:#21262d;color:#58a6ff;border:1px solid #30363d;">${parseFloat(asset.rsi).toFixed(1)}</span>
       </td>
       <td><span class="badge ${trackStyleClass}">${asset.macdStr}</span></td>
       <td><span class="badge ${sigClass}">${asset.signal}</span></td>
       <td>
         <div class="conf-container">
-          <span class="conf-text">${parseFloat(asset.confidence).toFixed(0)}%</span>
+          <span class="conf-text" style="color: ${textColor};">${parseFloat(asset.confidence).toFixed(0)}%</span>
           <div class="conf-bar-bg">
             <div class="conf-bar-fill" style="width: ${asset.confidence}%; background: ${barColor};"></div>
           </div>
@@ -231,10 +277,11 @@ function sortTable(columnIndex) {
       case 0: valA = a.sym; valB = b.sym; break;
       case 1: valA = a.price; valB = b.price; break;
       case 2: valA = a.change; valB = b.change; break;
-      case 3: valA = a.rsi; valB = b.rsi; break;
-      case 4: valA = a.macdStr; valB = b.macdStr; break;
-      case 5: valA = a.signal; valB = b.signal; break;
-      case 6: valA = a.confidence; valB = b.confidence; break;
+      case 3: valA = a.trend; valB = b.trend; break;
+      case 4: valA = a.rsi; valB = b.rsi; break;
+      case 5: valA = a.macdStr; valB = b.macdStr; break;
+      case 6: valA = a.signal; valB = b.signal; break;
+      case 7: valA = a.confidence; valB = b.confidence; break;
       default: return 0;
     }
     
@@ -277,7 +324,7 @@ function initFinnhubWebSocket() {
           
           const targetRowChange = document.getElementById(`change-${symbol}`);
           const changeClass = asset.change >= 0 ? "up" : "down";
-          const trendIcon = asset.trend === "UP" ? "▲" : "▼";
+          const trendIcon = asset.change >= 0 ? "▲" : "▼";
           
           targetRowPrice.innerHTML = `<span class="trend-icon ${changeClass}">${trendIcon}</span>$${price.toFixed(2)}`;
           if (targetRowChange) {
