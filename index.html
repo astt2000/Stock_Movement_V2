@@ -16,13 +16,14 @@
   .mkt-open{color:#3fb950}
   .mkt-closed{color:#f85149}
 
-  .card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px;box-shadow:0 4px 6px rgba(0,0,0,0.1)}
+  .card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:6px;box-shadow:0 4px 6px rgba(0,0,0,0.1);overflow-x:auto}
   
-  table{width:100%;border-collapse:collapse;text-align:left;table-layout:fixed}
-  th,td{padding:4px 6px;border-bottom:1px solid #21262d;height:32px;vertical-align:middle;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-  th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:11px;user-select:none;background:#11151c}
+  table{width:100%;border-collapse:collapse;text-align:left;table-layout:fixed;min-width:800px}
+  th,td{padding:6px 8px;border-bottom:1px solid #21262d;height:34px;vertical-align:middle;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:11px;user-select:none;background:#11151c;position:relative}
   
-  .sort-trigger{cursor:pointer;display:inline-block;width:85%;height:100%}
+  .header-content {display:flex;align-items:center;justify-content:between;width:100%;height:100%}
+  .sort-trigger{cursor:pointer;flex-grow:1;display:inline-block;overflow:hidden;text-overflow:ellipsis}
   .sort-trigger:hover{color:#58a6ff}
   th.sort-asc .sort-trigger::after{content:" ▴";color:#58a6ff}
   th.sort-desc .sort-trigger::after{content:" ▾";color:#58a6ff}
@@ -37,7 +38,7 @@
   
   .badge{padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700;font-family:monospace;display:inline-block}
   
-  /* Trend indicator layouts */
+  /* Moving Trend Column Presentation Units */
   .trend-pill {padding:2px 6px;border-radius:12px;font-size:10px;font-weight:bold;display:inline-flex;align-items:center;gap:3px}
   .trend-pill-up {background:rgba(63,185,80,0.15);color:#56d364;border:1px solid rgba(63,185,80,0.25)}
   .trend-pill-down {background:rgba(248,81,73,0.15);color:#ff7b72;border:1px solid rgba(248,81,73,0.25)}
@@ -47,29 +48,23 @@
   .track-bearish{background:rgba(248,81,73,0.12);color:#ff7b72;border:1px solid rgba(248,81,73,0.25)}
   .track-neutral{background:rgba(139,148,158,0.12);color:#c9d1d9;border:1px solid rgba(139,148,158,0.25)}
 
-  /* Color-Enhanced Action Signals */
+  /* Color-Enhanced Action Signals (Vibrant Background Gradients) */
   .sig-buy{background:linear-gradient(135deg, #1e7e34, #28a745);color:#ffffff;box-shadow:0 0 6px rgba(40,167,69,0.4);border:1px solid #34ce57}
   .sig-sell{background:linear-gradient(135deg, #bd2130, #dc3545);color:#ffffff;box-shadow:0 0 6px rgba(220,53,69,0.4);border:1px solid #e4606d}
   .sig-hold{background:#21262d;color:#8b949e;border:1px solid #30363d}
   
-  /* Color-Enhanced Confidence Visual Progress Indicators */
+  /* Color-Enhanced Confidence Progress Infrastructure */
   .conf-container {display:flex;align-items:center;gap:6px;width:100%}
   .conf-text {font-family:monospace;font-weight:bold;min-width:34px;text-shadow:0 0 4px rgba(0,0,0,0.5)}
   .conf-bar-bg {background:#161b22;height:6px;flex-grow:1;border-radius:3px;overflow:hidden;border:1px solid #30363d}
   .conf-bar-fill {height:100%;border-radius:2px;transition:width 0.3s ease}
   
-  /* Touch-Responsive Frame Architecture */
-  .help-wrapper {display:inline-block;position:relative}
-  .help-icon {background:#21262d;color:#8b949e;cursor:pointer;font-weight:bold;padding:0 6px;margin-left:2px;font-size:11px;border-radius:3px;border:1px solid #30363d;user-select:none;display:inline-block}
+  /* Fixed, Absolute-Positioned Tooltip Framework */
+  .help-wrapper {display:inline-flex;align-items:center;margin-left:4px}
+  .help-icon {background:#21262d;color:#8b949e;cursor:pointer;font-weight:bold;padding:0 5px;font-size:11px;border-radius:3px;border:1px solid #30363d;user-select:none}
   .help-icon:hover {color:#58a6ff;border-color:#58a6ff}
   
-  .tooltip-box {display:none;width:240px;background-color:#1c2128;color:#c9d1d9;text-align:left;border:1px solid #444c56;border-radius:6px;padding:10px;position:absolute;z-index:999;bottom:130%;left:50%;transform:translateX(-50%);box-shadow:0 8px 24px rgba(0,0,0,0.7);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.45;white-space:normal}
-  .tooltip-box::after {content:"";position:absolute;top:100%;left:50%;margin-left:-5px;border-width:5px;border-style:solid;border-color:#444c56 transparent transparent transparent}
-  
-  /* Adjusted alignment offsets to prevent the box cutting off outside screen borders */
-  th .tooltip-box {bottom:auto;top:140%;left:-20px;transform:none}
-  th .tooltip-box::after {top:-10px;left:25px;border-color:transparent transparent #444c56 transparent}
-  
+  .tooltip-box {display:none;width:250px;background-color:#1c2128;color:#c9d1d9;text-align:left;border:1px solid #444c56;border-radius:6px;padding:10px;position:absolute;z-index:9999;top:110%;right:0;box-shadow:0 8px 24px rgba(0,0,0,0.8);font-weight:normal;font-family:sans-serif;font-size:11px;line-height:1.45;white-space:normal}
   .tooltip-box.visible {display:block}
 </style>
 </head>
@@ -94,90 +89,102 @@
     <thead>
       <tr id="headerRow">
         <th style="width: 22%;">
-          <span class="sort-trigger" onclick="sortTable(0)">Ticker & Name</span>
-          <div class="help-wrapper">
-            <span class="help-icon" onclick="toggleTooltip(event, 'tt0')">?</span>
-            <div id="tt0" class="tooltip-box">
-              <strong>Ticker & Asset Name:</strong><br>The official market identifier mapped to its legally registered corporate profile name.
+          <div class="header-content">
+            <span class="sort-trigger" onclick="sortTable(0)">Ticker & Name</span>
+            <div class="help-wrapper">
+              <span class="help-icon" onclick="toggleTooltip(event, 'tt0')">?</span>
+              <div id="tt0" class="tooltip-box">
+                <strong>Ticker & Asset Name:</strong><br>The official market symbol mapped directly to its corporate name profile.
+              </div>
             </div>
           </div>
         </th>
         <th style="width: 11%;"><span class="sort-trigger" onclick="sortTable(1)">Live Price</span></th>
         <th style="width: 9%;"><span class="sort-trigger" onclick="sortTable(2)">Change</span></th>
         <th style="width: 12%;">
-          <span class="sort-trigger" onclick="sortTable(3)">Moving Trend</span>
-          <div class="help-wrapper">
-            <span class="help-icon" onclick="toggleTooltip(event, 'tt1')">?</span>
-            <div id="tt1" class="tooltip-box">
-              <strong>Moving Trend:</strong><br>Indicates the rolling multi-day momentum direction based on recent historical close vectors.
+          <div class="header-content">
+            <span class="sort-trigger" onclick="sortTable(3)">Moving Trend</span>
+            <div class="help-wrapper">
+              <span class="help-icon" onclick="toggleTooltip(event, 'tt1')">?</span>
+              <div id="tt1" class="tooltip-box">
+                <strong>Moving Trend:</strong><br>Indicates rolling price vector directions evaluated across recent multi-day historical cycles.
+              </div>
             </div>
           </div>
         </th>
         <th style="width: 10%;">
-          <span class="sort-trigger" onclick="sortTable(4)">RSI (14)</span>
-          <div class="help-wrapper">
-            <span class="help-icon" onclick="toggleTooltip(event, 'tt2')">?</span>
-            <div id="tt2" class="tooltip-box">
-              <strong>RSI (Relative Strength Index):</strong><br>
-              • <strong>&gt;70 (Overbought):</strong> Assets are considered overextended. Reversal down risk.<br>
-              • <strong>&lt;30 (Oversold):</strong> Assets are heavily depleted. Reversal bounce potential.
+          <div class="header-content">
+            <span class="sort-trigger" onclick="sortTable(4)">RSI (14)</span>
+            <div class="help-wrapper">
+              <span class="help-icon" onclick="toggleTooltip(event, 'tt2')">?</span>
+              <div id="tt2" class="tooltip-box">
+                <strong>RSI (Relative Strength Index):</strong><br>
+                • <strong>&gt;70 (Overbought):</strong> Overextended momentum layer. Correction risk.<br>
+                • <strong>&lt;30 (Oversold):</strong> Depleted asset base. Turning bounce potential.
+              </div>
             </div>
           </div>
         </th>
         <th style="width: 14%;">
-          <span class="sort-trigger" onclick="sortTable(5)">Calculated Track</span>
-          <div class="help-wrapper">
-            <span class="help-icon" onclick="toggleTooltip(event, 'tt3')">?</span>
-            <div id="tt3" class="tooltip-box">
-              <strong>Calculated Track:</strong><br>Displays trend convergence states using MACD lines.<br>
-              • <strong>Bullish Crossover:</strong> Upward break.<br>
-              • <strong>Bearish Phase:</strong> Persistent selling tracking.
+          <div class="header-content">
+            <span class="sort-trigger" onclick="sortTable(5)">Calculated Track</span>
+            <div class="help-wrapper">
+              <span class="help-icon" onclick="toggleTooltip(event, 'tt3')">?</span>
+              <div id="tt3" class="tooltip-box">
+                <strong>Calculated Track:</strong><br>Active trend phases tracked using MACD convergence line mathematical crossovers.
+              </div>
             </div>
           </div>
         </th>
         <th style="width: 11%;">
-          <span class="sort-trigger" onclick="sortTable(6)">Action Signal</span>
-          <div class="help-wrapper">
-            <span class="help-icon" onclick="toggleTooltip(event, 'tt4')">?</span>
-            <div id="tt4" class="tooltip-box">
-              <strong>Action Signal:</strong><br>Algorithmic execution matrix parsing intersecting structural RSI boundaries with active MACD directions.
+          <div class="header-content">
+            <span class="sort-trigger" onclick="sortTable(6)">Action Signal</span>
+            <div class="help-wrapper">
+              <span class="help-icon" onclick="toggleTooltip(event, 'tt4')">?</span>
+              <div id="tt4" class="tooltip-box">
+                <strong>Action Signal:</strong><br>Algorithmic strategy decisions triggered when RSI boundaries intersect MACD validation shifts.
+              </div>
             </div>
           </div>
         </th>
         <th style="width: 11%;">
-          <span class="sort-trigger" onclick="sortTable(7)">Confidence</span>
-          <div class="help-wrapper">
-            <span class="help-icon" onclick="toggleTooltip(event, 'tt5')">?</span>
-            <div id="tt5" class="tooltip-box">
-              <strong>Confidence Score:</strong><br>Conviction percentage showing the algorithmic strength backing the action execution signal.
+          <div class="header-content">
+            <span class="sort-trigger" onclick="sortTable(7)">Confidence</span>
+            <div class="help-wrapper">
+              <span class="help-icon" onclick="toggleTooltip(event, 'tt5')">?</span>
+              <div id="tt5" class="tooltip-box">
+                <strong>Confidence Score:</strong><br>Mathematical probability value indicating structural calculation support for the Action Signal.
+              </div>
             </div>
           </div>
         </th>
       </tr>
     </thead>
     <tbody id="terminalBody">
-      <tr><td colspan="8" style="text-align:center;color:#8b949e;padding:15px;">Assembling matrix vectors...</td></tr>
+      <tr><td colspan="8" style="text-align:center;color:#8b949e;padding:15px;">Assembling market matrix arrays...</td></tr>
     </tbody>
   </table>
 </div>
 
 <script>
-const FINNHUB_KEY = "d2530epr01qns40ctr90d2530epr01qns40ctr9g";
+const FINNHUB_KEY = "__FINNHUB_KEY_PLACEHOLDER__";
 let trackedSymbols = [];
 let registryData = [];
 let currentSortCol = -1;
 let sortAscending = true;
 
-// Touch-Friendly Tooltip Open/Close Logic Engine
+// Direct Touch-Input JavaScript Tooltip Layer Engine
 function toggleTooltip(event, id) {
-  event.stopPropagation(); // Block parent table sort from being clicked
-  const box = document.getElementById(id);
-  const isCurrentlyVisible = box.classList.contains('visible');
+  event.preventDefault();
+  event.stopPropagation(); // Restricts the parent column click from triggering a table sort update
   
-  // Close everything first so multiple boxes don't overlap
+  const box = document.getElementById(id);
+  const isVisible = box.classList.contains('visible');
+  
+  // Clean sweep other visible instances to avoid overlay confusion
   document.querySelectorAll('.tooltip-box').forEach(b => b.classList.remove('visible'));
   
-  if (!isCurrentlyVisible) {
+  if (!isVisible) {
     box.classList.add('visible');
   }
 }
@@ -216,7 +223,6 @@ function renderTable() {
     const trendIcon = asset.change >= 0 ? "▲" : "▼";
     const sign = asset.change >= 0 ? "+" : "";
     
-    // Build Moving Trend Layout
     const isUp = asset.trend === "UP";
     const trendPillClass = isUp ? "trend-pill-up" : "trend-pill-down";
     const trendText = isUp ? "▲ UP" : "▼ DOWN";
