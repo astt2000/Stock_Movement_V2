@@ -1,51 +1,37 @@
-name: Market Data Stream Refresh (V2)
+name: Market Data Stream Refresh
 
 on:
   schedule:
-    - cron: '0 * * * *' # Triggers automatically every hour
-  workflow_dispatch: # Allows you to manually click "Run workflow"
-
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
+    # Triggers automatically every 20 minutes (Universal Time Coordinated / UTC)
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+    # Keeps the manual "Run workflow" button active just in case
 
 jobs:
-  refresh-data:
+  refresh-indicators:
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: write
-
     steps:
-    - name: Checkout Repository Core
-      uses: actions/checkout@v4
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
 
-    - name: Initialize Enterprise Python Engine
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
-      
-    - name: Install Analytics Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install yfinance pandas requests
-        
-    - name: Execute Live Technical Calculations
-      env:
-        TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
-      run: python update_stocks.py
+      - name: Set Up Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-python: '3.10'
+          cache: 'pip'
 
-    - name: Inject Production API Keys to Dashboard
-      run: |
-        # Replaces placeholders in index.html with GitHub Repository Secrets during runtime
-        sed -i "s|__FINNHUB_KEY_PLACEHOLDER__|${{ secrets.FINNHUB_API_KEY }}|g" index.html
-        sed -i "s|__TWELVEDATA_KEY_PLACEHOLDER__|${{ secrets.TWELVEDATA_API_KEY }}|g" index.html
+      - name: Install Architecture Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas
 
-    - name: Commit and Push Synchronized Data Packet
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add live_market.json index.html
-        
-        # Only commit if changes are detected to prevent build loops
-        git diff-index --quiet HEAD || git commit -m "Synchronize live market data feed [Automated]"
-        git push origin main
+      - name: Execute Institutional Analytics Engine
+        run: python update_stocks.py
+
+      - name: Commit and Push Updated Matrix Vectors
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add live_market.json
+          git diff-index --quiet HEAD || git commit -m "Automated Matrix Sync: $(date -u +'%Y-%m-%d %H:%M:%S') UTC"
+          git push
