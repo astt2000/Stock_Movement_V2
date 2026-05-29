@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Institutional Trading Intelligence Terminal</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0d1117;color:#c9d1d9;padding:20px}
+  header{background:#161b22;padding:15px;border-radius:6px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;border:1px solid #30363d}
+  h1{font-size:16px;color:#58a6ff;font-weight:700}
+  .meta{font-size:12px;color:#8b949e}
+  .grid{display:grid;grid-template-columns:1fr;gap:20px}
+  .card{background:#161b22;border:1px solid #30363d;border-radius:6px;padding:15px}
+  h2{font-size:14px;margin-bottom:12px;color:#f0883e;text-transform:uppercase;letter-spacing:0.5px}
+  table{width:100%;border-collapse:collapse;text-align:left;font-size:13px}
+  th,td{padding:12px 10px;border-bottom:1px solid #30363d}
+  th{color:#8b949e;font-weight:600;text-transform:uppercase;font-size:11px}
+  .up{color:#3fb950;font-weight:bold}
+  .down{color:#f85149;font-weight:bold}
+  .badge{padding:3px 6px;border-radius:4px;font-size:11px;font-weight:bold;background:#21262d;color:#c9d1d9}
+  .badge-rsi{background:#1f6feb;color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Institutional Trading Intelligence Terminal</h1>
+    <div class="meta">
+      Feed: <span id="wsStatus" style="color:#f85149;font-weight:bold;">Disconnected</span> | 
+      Engine Update: <span id="syncTimestamp">-</span> | 
+      Terminal Clock: <span id="localTimestamp">-</span>
+    </div>
+  </div>
+</header>
+
+<div class="grid">
+  <div class="card">
+    <h2>Real-Time Surveillance Desk (Live Feeds)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Symbol</th>
+          <th>Live Market Price</th>
+          <th>Session Change</th>
+          <th>RSI (14)</th>
+          <th>Calculated Track</th>
+        </tr>
+      </thead>
+      <tbody id="terminalBody">
+        <tr><td colspan="5" style="text-align:center;color:#8b949e;">Initializing baseline telemetry maps...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Secure placeholders injected dynamically by your deployment workflow
+const FINNHUB_KEY = "__FINNHUB_KEY_PLACEHOLDER__";
+const TWELVEDATA_KEY = "__TWELVEDATA_KEY_PLACEHOLDER__";
+
+let trackedSymbols = [];
+let registryData = {};
+
+async function initializeTerminal() {
+  try {
+    const res = await fetch('./live_market.json', { cache: "no-store" });
+    const payload = await res.json();
+    
+    document.getElementById('syncTimestamp').innerText = payload.sync_timestamp || "No Track Found";
+    trackedSymbols = [...new Set([...payload.list1_symbols, ...payload.list2_symbols])];
+    registryData = payload.registry || {};
+    
+    buildTable();
+    initFinnhubWebSocket();
+    initTwelveDataClientRotation();
+  } catch (err) {
+    console.error("System structural compilation failed:", err);
+  }
+}
+
+function buildTable() {
+  const tbody = document.getElementById('terminalBody');
+  tbody.innerHTML = '';
+  
+  trackedSymbols.forEach(sym => {
+    const asset = registryData[sym] || { price: 0, change: 0, rsi: 50, macdStr: "Awaiting Frame" };
+    const changeClass = asset.change >= 0 ? "up" : "down";
+    const sign = asset.change >= 0 ? "+" : "";
+    
+    const row = document.createElement('tr');
+    row.id = `row-${sym}`;
+    row.innerHTML = `
+      <td><strong>${sym}</strong></td>
+      <td id="price-${sym}" style="font-family:monospace;font-size:14px;">$${parseFloat(asset.price).toFixed(2)}</td>
+      <td id="change-${sym}" class="${changeClass}">${sign}${parseFloat(asset.change).toFixed(2)}%</td>
+      <td id="rsi-${sym}"><span class="badge badge-rsi">${parseFloat(asset.rsi).toFixed(1)}</span></td>
+      <td id="macd-${sym}"><span class="badge">${asset.macdStr}</span></td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+// 1. WebSocket Live Stream Layer (Finnhub Feed)
+function initFinnhubWebSocket() {
+  if (FINNHUB_KEY.startsWith("__")) {
+    console.warn("Keys not compiled yet. Skipping live socket deployment.");
+    return;
+  }
+
+  const socket = new WebSocket(`wss://ws.finnhub.io?token=${FINNHUB_KEY}`);
+  const statusEl = document.getElementById('wsStatus');
+
+  socket.addEventListener('open', () => {
+    statusEl.innerText = "STREAMING (LIVE)";
+    statusEl.style.color = "#3fb950";
+    trackedSymbols.forEach(sym => {
+      socket.send(JSON.stringify({'type':'subscribe', 'symbol': sym}));
+    });
+  });
+
+  socket.addEventListener('message', (event) => {
+    const data = JSON.parse(event.data);
+    if (data.type === 'trade') {
+      const match = data.data[0];
+      const symbol = match.s;
+      const price = parseFloat(match.p).toFixed(2);
+      
+      const priceCell = document.getElementById(`price-${symbol}`);
+      if (priceCell) {
+        const oldPrice = parseFloat(priceCell.innerText.replace('$','')) || 0;
+        priceCell.innerText = `$${price}`;
+        priceCell.className = (parseFloat(price) >= oldPrice) ? "up" : "down";
+        
+        // Dynamically calculate volatile session deviation changes on frame tick
+        if (registryData[symbol]) {
+          const baselineClose = registryData[symbol].price / (1 + (registryData[symbol].change / 100));
+          const currentDev = ((parseFloat(price) - baselineClose) / baselineClose) * 100;
+          const changeCell = document.getElementById(`change-${symbol}`);
+          if (changeCell) {
+            changeCell.innerText = `${currentDev >= 0 ? '+' : ''}${currentDev.toFixed(2)}%`;
+            changeCell.className = currentDev >= 0 ? "up" : "down";
+          }
+        }
+      }
+    }
+  });
+
+  socket.addEventListener('close', () => {
+    statusEl.innerText = "OFFLINE (RECONNECTING)";
+    statusEl.style.color = "#f85149";
+    setTimeout(initFinnhubWebSocket, 5000);
+  });
+}
+
+// 2. Client Side Technical Indicator Verification Loop (Twelve Data API Throttling)
+let rotationIndex = 0;
+function initTwelveDataClientRotation() {
+  if (TWELVEDATA_KEY.startsWith("__") || trackedSymbols.length === 0) return;
+
+  // Rotates 1 symbol request asset frame cleanly every 9 seconds to stay under rate limits
+  setInterval(async () => {
+    const targetSymbol = trackedSymbols[rotationIndex];
+    try {
+      const url = `https://api.twelvedata.com/rsi?symbol=${targetSymbol}&interval=1min&outputsize=1&apikey=${TWELVEDATA_KEY}`;
+      const res = await fetch(url);
+      const data = await res.json();
+      
+      if (data.values && data.values[0]) {
+        const rsiVal = parseFloat(data.values[0].rsi).toFixed(1);
+        const rsiEl = document.getElementById(`rsi-${targetSymbol}`);
+        if (rsiEl) {
+          rsiEl.innerHTML = `<span class="badge badge-rsi">${rsiVal}</span>`;
+        }
+      }
+    } catch (e) {
+      console.warn("Indicator loop throttled.");
+    }
+    rotationIndex = (rotationIndex + 1) % trackedSymbols.length;
+  }, 9000);
+}
+
+// Clock updates
+setInterval(() => {
+  document.getElementById('localTimestamp').innerText = new Date().toLocaleTimeString();
+}, 1000);
+
+window.onload = initializeTerminal;
+</script>
+</body>
+</html>
