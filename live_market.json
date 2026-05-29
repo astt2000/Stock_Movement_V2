@@ -1,5 +1,5 @@
 {
-  "sync_timestamp": "2026-05-29 07:07:43 AM",
+  "sync_timestamp": "2026-05-29 07:19:53 AM",
   "list1_symbols": [
     "ALAB",
     "BBAI",
@@ -31,6 +31,215 @@
     "NVDA"
   ],
   "registry": {
+    "SOUN": {
+      "sym": "SOUN",
+      "name": "SoundHound AI, Inc.",
+      "price": 8.5600004196167,
+      "change": 5.940600253006966,
+      "trend": "UP",
+      "rsi": 33.01587565639288,
+      "macdStr": "Bearish Phase",
+      "signal": "HOLD",
+      "confidence": 50.79540829790937
+    },
+    "OKLO": {
+      "sym": "OKLO",
+      "name": "Oklo Inc.",
+      "price": 68.08999633789062,
+      "change": 0.3981077031573792,
+      "trend": "DOWN",
+      "rsi": 45.60206121431231,
+      "macdStr": "Bearish Phase",
+      "signal": "HOLD",
+      "confidence": 53.33137114410448
+    },
+    "NVDA": {
+      "sym": "NVDA",
+      "name": "NVIDIA Corporation",
+      "price": 214.25,
+      "change": 0.7761024690098022,
+      "trend": "DOWN",
+      "rsi": 52.51141551168658,
+      "macdStr": "Bearish Phase",
+      "signal": "HOLD",
+      "confidence": 65.0
+    },
+    "BTBT": {
+      "sym": "BTBT",
+      "name": "Bit Digital, Inc.",
+      "price": 2.0299999713897705,
+      "change": 0.0,
+      "trend": "UP",
+      "rsi": 56.666662164135914,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 50.073273471989424
+    },
+    "SOFI": {
+      "sym": "SOFI",
+      "name": "SoFi Technologies, Inc.",
+      "price": 16.969999313354492,
+      "change": 4.947428777278653,
+      "trend": "UP",
+      "rsi": 59.168233732627726,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 51.38929957819891
+    },
+    "AUR": {
+      "sym": "AUR",
+      "name": "Aurora Innovation, Inc.",
+      "price": 7.070000171661377,
+      "change": 3.8179182241771845,
+      "trend": "UP",
+      "rsi": 49.07162201505678,
+      "macdStr": "Bearish Phase",
+      "signal": "HOLD",
+      "confidence": 51.39401565764472
+    },
+    "ACMR": {
+      "sym": "ACMR",
+      "name": "ACM Research, Inc.",
+      "price": 92.86000061035156,
+      "change": 4.760831734838601,
+      "trend": "UP",
+      "rsi": 91.04878408986846,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 65.0
+    },
+    "INTC": {
+      "sym": "INTC",
+      "name": "Intel Corporation",
+      "price": 120.88999938964844,
+      "change": -0.7226716577790724,
+      "trend": "DOWN",
+      "rsi": 59.39322972808666,
+      "macdStr": "Bearish Phase",
+      "signal": "HOLD",
+      "confidence": 62.85361162580987
+    },
+    "LUNR": {
+      "sym": "LUNR",
+      "name": "Intuitive Machines, Inc.",
+      "price": 45.70000076293945,
+      "change": 13.287061452843618,
+      "trend": "UP",
+      "rsi": 79.04224295098474,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 59.30797294256279
+    },
+    "MVST": {
+      "sym": "MVST",
+      "name": "Microvast Holdings, Inc.",
+      "price": 1.600000023841858,
+      "change": 10.344825601747921,
+      "trend": "UP",
+      "rsi": 42.07650415457456,
+      "macdStr": "Bearish Phase",
+      "signal": "HOLD",
+      "confidence": 50.0106795998261
+    },
+    "RUM": {
+      "sym": "RUM",
+      "name": "Rumble Inc.",
+      "price": 9.460000038146973,
+      "change": -2.974358583107973,
+      "trend": "UP",
+      "rsi": 65.40248187739944,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 51.26193663597126
+    },
+    "QS": {
+      "sym": "QS",
+      "name": "QuantumScape Corporation",
+      "price": 9.130000114440918,
+      "change": 0.2195440012888736,
+      "trend": "UP",
+      "rsi": 68.31275866029254,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 50.98734729611969
+    },
+    "IOT": {
+      "sym": "IOT",
+      "name": "Samsara Inc.",
+      "price": 31.56999969482422,
+      "change": 7.125892196808094,
+      "trend": "UP",
+      "rsi": 56.4601711255144,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 52.06468340224192
+    },
+    "BBAI": {
+      "sym": "BBAI",
+      "name": "BigBear.ai Holdings, Inc.",
+      "price": 4.940000057220459,
+      "change": 13.043482530628332,
+      "trend": "UP",
+      "rsi": 67.90697109264048,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 50.43583243960857
+    },
+    "SMR": {
+      "sym": "SMR",
+      "name": "NuScale Power Corporation",
+      "price": 12.1899995803833,
+      "change": 0.9941995740939383,
+      "trend": "DOWN",
+      "rsi": 47.05882089164857,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 50.318470570168245
+    },
+    "KEEL": {
+      "sym": "KEEL",
+      "name": "Keel Infrastructure Corp.",
+      "price": 5.619999885559082,
+      "change": 2.089005789781774,
+      "trend": "UP",
+      "rsi": 76.74417371613704,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 51.0268253543545
+    },
+    "ALAB": {
+      "sym": "ALAB",
+      "name": "Astera Labs, Inc.",
+      "price": 349.1700134277344,
+      "change": 7.3279524911464495,
+      "trend": "UP",
+      "rsi": 89.65285823765993,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 65.0
+    },
+    "LUCD": {
+      "sym": "LUCD",
+      "name": "Lucid Diagnostics Inc.",
+      "price": 1.0499999523162842,
+      "change": 0.9615375798129149,
+      "trend": "DOWN",
+      "rsi": 49.99999818652818,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 50.13807017026125
+    },
+    "BMNR": {
+      "sym": "BMNR",
+      "name": "Bitmine Immersion Technologies, Inc.",
+      "price": 19.25,
+      "change": 2.284805059237263,
+      "trend": "UP",
+      "rsi": 36.097077561157825,
+      "macdStr": "Bearish Phase",
+      "signal": "HOLD",
+      "confidence": 52.35556234928068
+    },
     "LIDR": {
       "sym": "LIDR",
       "name": "AEye, Inc.",
@@ -41,6 +250,28 @@
       "macdStr": "Bearish Phase",
       "signal": "HOLD",
       "confidence": 50.09299833592993
+    },
+    "RKLB": {
+      "sym": "RKLB",
+      "name": "Rocket Lab Corporation",
+      "price": 148.02999877929688,
+      "change": -1.4644192310516722,
+      "trend": "UP",
+      "rsi": 80.25615801470713,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 65.0
+    },
+    "NOK": {
+      "sym": "NOK",
+      "name": "Nokia Oyj",
+      "price": 15.279999732971191,
+      "change": -2.551024007777311,
+      "trend": "DOWN",
+      "rsi": 66.3322177744128,
+      "macdStr": "Bullish Crossover",
+      "signal": "HOLD",
+      "confidence": 50.67191049830585
     },
     "ENVX": {
       "sym": "ENVX",
@@ -64,160 +295,6 @@
       "signal": "HOLD",
       "confidence": 51.34938415703083
     },
-    "ALAB": {
-      "sym": "ALAB",
-      "name": "Astera Labs, Inc.",
-      "price": 349.1700134277344,
-      "change": 7.3279524911464495,
-      "trend": "UP",
-      "rsi": 89.65285823765993,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 65.0
-    },
-    "LUNR": {
-      "sym": "LUNR",
-      "name": "Intuitive Machines, Inc.",
-      "price": 45.70000076293945,
-      "change": 13.287061452843618,
-      "trend": "UP",
-      "rsi": 79.04224295098474,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 59.30797294256279
-    },
-    "LUCD": {
-      "sym": "LUCD",
-      "name": "Lucid Diagnostics Inc.",
-      "price": 1.0499999523162842,
-      "change": 0.9615375798129149,
-      "trend": "DOWN",
-      "rsi": 49.99999818652818,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 50.13807017026125
-    },
-    "SOFI": {
-      "sym": "SOFI",
-      "name": "SoFi Technologies, Inc.",
-      "price": 16.969999313354492,
-      "change": 4.947428777278653,
-      "trend": "UP",
-      "rsi": 59.168233732627726,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 51.38929957819891
-    },
-    "ACMR": {
-      "sym": "ACMR",
-      "name": "ACM Research, Inc.",
-      "price": 92.86000061035156,
-      "change": 4.760831734838601,
-      "trend": "UP",
-      "rsi": 91.04878408986846,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 65.0
-    },
-    "BBAI": {
-      "sym": "BBAI",
-      "name": "BigBear.ai Holdings, Inc.",
-      "price": 4.940000057220459,
-      "change": 13.043482530628332,
-      "trend": "UP",
-      "rsi": 67.90697109264048,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 50.43583243960857
-    },
-    "BTBT": {
-      "sym": "BTBT",
-      "name": "Bit Digital, Inc.",
-      "price": 2.0299999713897705,
-      "change": 0.0,
-      "trend": "UP",
-      "rsi": 56.666662164135914,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 50.073273471989424
-    },
-    "RUM": {
-      "sym": "RUM",
-      "name": "Rumble Inc.",
-      "price": 9.460000038146973,
-      "change": -2.974358583107973,
-      "trend": "UP",
-      "rsi": 65.40248187739944,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 51.26193663597126
-    },
-    "NVDA": {
-      "sym": "NVDA",
-      "name": "NVIDIA Corporation",
-      "price": 214.25,
-      "change": 0.7761024690098022,
-      "trend": "DOWN",
-      "rsi": 52.51141551168658,
-      "macdStr": "Bearish Phase",
-      "signal": "HOLD",
-      "confidence": 65.0
-    },
-    "OKLO": {
-      "sym": "OKLO",
-      "name": "Oklo Inc.",
-      "price": 68.08999633789062,
-      "change": 0.3981077031573792,
-      "trend": "DOWN",
-      "rsi": 45.60206121431231,
-      "macdStr": "Bearish Phase",
-      "signal": "HOLD",
-      "confidence": 53.33137114410448
-    },
-    "IOT": {
-      "sym": "IOT",
-      "name": "Samsara Inc.",
-      "price": 31.56999969482422,
-      "change": 7.125892196808094,
-      "trend": "UP",
-      "rsi": 56.4601711255144,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 52.06468340224192
-    },
-    "NOK": {
-      "sym": "NOK",
-      "name": "Nokia Oyj",
-      "price": 15.279999732971191,
-      "change": -2.551024007777311,
-      "trend": "DOWN",
-      "rsi": 66.3322177744128,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 50.67191049830585
-    },
-    "SOUN": {
-      "sym": "SOUN",
-      "name": "SoundHound AI, Inc.",
-      "price": 8.5600004196167,
-      "change": 5.940600253006966,
-      "trend": "UP",
-      "rsi": 33.01587565639288,
-      "macdStr": "Bearish Phase",
-      "signal": "HOLD",
-      "confidence": 50.79540829790937
-    },
-    "RKLB": {
-      "sym": "RKLB",
-      "name": "Rocket Lab Corporation",
-      "price": 148.02999877929688,
-      "change": -1.4644192310516722,
-      "trend": "UP",
-      "rsi": 80.25615801470713,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 65.0
-    },
     "KULR": {
       "sym": "KULR",
       "name": "KULR Technology Group, Inc.",
@@ -228,83 +305,6 @@
       "macdStr": "Bullish Crossover",
       "signal": "HOLD",
       "confidence": 51.30651784437788
-    },
-    "SMR": {
-      "sym": "SMR",
-      "name": "NuScale Power Corporation",
-      "price": 12.1899995803833,
-      "change": 0.9941995740939383,
-      "trend": "DOWN",
-      "rsi": 47.05882089164857,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 50.318470570168245
-    },
-    "QS": {
-      "sym": "QS",
-      "name": "QuantumScape Corporation",
-      "price": 9.130000114440918,
-      "change": 0.2195440012888736,
-      "trend": "UP",
-      "rsi": 68.31275866029254,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 50.98734729611969
-    },
-    "MVST": {
-      "sym": "MVST",
-      "name": "Microvast Holdings, Inc.",
-      "price": 1.600000023841858,
-      "change": 10.344825601747921,
-      "trend": "UP",
-      "rsi": 42.07650415457456,
-      "macdStr": "Bearish Phase",
-      "signal": "HOLD",
-      "confidence": 50.0106795998261
-    },
-    "BMNR": {
-      "sym": "BMNR",
-      "name": "Bitmine Immersion Technologies, Inc.",
-      "price": 19.25,
-      "change": 2.284805059237263,
-      "trend": "UP",
-      "rsi": 36.097077561157825,
-      "macdStr": "Bearish Phase",
-      "signal": "HOLD",
-      "confidence": 52.35556234928068
-    },
-    "INTC": {
-      "sym": "INTC",
-      "name": "Intel Corporation",
-      "price": 120.88999938964844,
-      "change": -0.7226716577790724,
-      "trend": "DOWN",
-      "rsi": 59.39322972808666,
-      "macdStr": "Bearish Phase",
-      "signal": "HOLD",
-      "confidence": 62.85361162580987
-    },
-    "KEEL": {
-      "sym": "KEEL",
-      "name": "Keel Infrastructure Corp.",
-      "price": 5.619999885559082,
-      "change": 2.089005789781774,
-      "trend": "UP",
-      "rsi": 76.74417371613704,
-      "macdStr": "Bullish Crossover",
-      "signal": "HOLD",
-      "confidence": 51.0268253543545
-    },
-    "AUR": {
-      "sym": "AUR",
-      "name": "Aurora Innovation, Inc.",
-      "price": 7.070000171661377,
-      "change": 3.8179182241771845,
-      "trend": "UP",
-      "rsi": 49.07162201505678,
-      "macdStr": "Bearish Phase",
-      "signal": "HOLD",
-      "confidence": 51.39401565764472
     }
   }
 }
